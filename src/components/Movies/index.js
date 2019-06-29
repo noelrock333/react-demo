@@ -1,19 +1,18 @@
 import React from 'react';
+import Item from './item';
 
 class Movies extends React.Component {
   state = {
     movies: [
-      'Como si fuera la primera vez',
-      'Godzilla',
-      'Toistori',
-      'MIB',
-      'Aladino'
+      { name: 'Como si fuera la primera vez', imageUrl: 'https://i.ytimg.com/vi/qu20bckIBF8/maxresdefault.jpg' },
+      { name: 'Godzilla', imageUrl: 'https://pics.filmaffinity.com/godzilla_king_of_the_monsters-188251207-large.jpg'},
+      { name: 'Toistori', imageUrl: 'https://imagenes.canalrcn.com/lomaslike/toy-story-4-pelicula-taquilla-norteamericana-critica-.jpg' }
     ],
     movie: ''
   }
 
   renderItems = (movies) => {
-    return movies.map((item, index) => <li key={index}>{item}</li>)
+    return movies.map((item, index) => <Item key={index} movie={item}/>)
   }
 
   _onSubmit = (event) => {
