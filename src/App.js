@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import Movies from './components/Movies';
+import AppRoutes from './router';
+import Header from './components/Header';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <Movies />
-      </header>
+      <Header brandImageUrl="https://michelada.io/images/v3/logo.svg" />
+      <AppRoutes />
     </div>
   );
 }

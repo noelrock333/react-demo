@@ -1,18 +1,42 @@
 import React from 'react';
 import Item from './item';
+import axios from 'axios';
 
 class Movies extends React.Component {
   state = {
-    movies: [
-      { name: 'Como si fuera la primera vez', imageUrl: 'https://i.ytimg.com/vi/qu20bckIBF8/maxresdefault.jpg' },
-      { name: 'Godzilla', imageUrl: 'https://pics.filmaffinity.com/godzilla_king_of_the_monsters-188251207-large.jpg'},
-      { name: 'Toistori', imageUrl: 'https://imagenes.canalrcn.com/lomaslike/toy-story-4-pelicula-taquilla-norteamericana-critica-.jpg' }
-    ],
+    movies: [],
     movie: ''
   }
 
+  async componentDidMount() {
+    try {
+      let request = await axios.get('https://taller-node.herokuapp.com/videos/list');
+      let { data } = request;
+      this.setState({
+        movies: data.map(item => {
+          return {
+            id: item.id,
+            title: item.title,
+            imageUrl: item.image,
+            videoUrl: item.url
+          }
+        })
+      })
+      console.log(data);
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
+  componentWillUnmount() {
+    console.log("Adios mundo cruel")
+  }
+
   renderItems = (movies) => {
-    return movies.map((item, index) => <Item key={index} movie={item}/>)
+    return movies.map((item, index) => <Item key={index} movie={item}>
+      <code>Aqui va codigo</code>
+      <a href="">un link</a>
+    </Item>)
   }
 
   _onSubmit = (event) => {
@@ -37,17 +61,20 @@ class Movies extends React.Component {
     let { movies } = this.state;
     return (
       <div className="List">
-        <form onSubmit={this._onSubmit}>
-          <input
-            type="text"
-            name="movie"
-            onChange={this._onInputMovieChange}
-            value={this.state.movie}/>
-          <input type="submit" value="Agregar"/>
-        </form>
-        <ul>
+        <div className="row justify-content-center">
+          <form onSubmit={this._onSubmit} className="mb-4 input-group col-sm-5">
+            <input
+              type="text"
+              name="movie"
+              className="input-group-text"
+              onChange={this._onInputMovieChange}
+              value={this.state.movie}/>
+            <input type="submit" value="Agregar" className="input-group-button"/>
+          </form>
+        </div>
+        <div className="row">
           {this.renderItems(movies)}
-        </ul>
+        </div>
       </div>
     );
   } 
