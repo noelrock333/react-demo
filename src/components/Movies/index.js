@@ -1,6 +1,7 @@
 import React from 'react';
 import Item from './item';
 import axios from 'axios';
+import { connect }  from 'react-redux';
 
 class Movies extends React.Component {
   state = {
@@ -81,4 +82,12 @@ class Movies extends React.Component {
 
 }
 
-export default Movies;
+// El estado es el contenido de nuestro store
+const mapStateToProps = (state) => {
+  // state.getState();
+  return {
+    results: state.results
+  } 
+}
+
+export default connect(mapStateToProps)(Movies);
